@@ -1,0 +1,7 @@
+config:
+  processor: "./tests/flows/homepageFlows.js"
+scenarios:
+  - name : "Gmail Link Click Response"
+    engine: playwright
+    flowFunction: "clickGmailLink"
+# For more information: https://docs.art/reference/test-script#config-section

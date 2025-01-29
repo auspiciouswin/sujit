@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "https://www.artillery.io/schema.json": [
+            "file:///e%3A/Workplace/Artillery/Test_Playwright_Project/artillery-config.yml",
+            "file:///e%3A/Workplace/Artillery/Test_Playwright_Project/scenarios/homepage.yml"
+        ]
+    }
+}

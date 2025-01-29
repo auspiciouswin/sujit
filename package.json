@@ -1,0 +1,22 @@
+{
+  "name": "test_playwright_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env TEST_ENV=\"stage\" artillery run artillery-config.yml scenarios/homepage.yml --environment stage --record --key a9_mGnKcwfB5ilUR8SskPTmm1qPzJKPn5ec",
+    "test:local": "cross-env TEST_ENV=\"stage\" artillery run artillery-config-local.yml scenarios/askcr.yml --environment stage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.7",
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "@artilleryio/playwright-reporter": "^1.0.0",
+    "dotenv": "^16.4.7"
+  }
+}
