@@ -30,5 +30,5 @@ config:
     ensure: {}
     expect: {}
 
- # ensure:
- #   min: 2500000
+  ensure:
+    min: 2500000
