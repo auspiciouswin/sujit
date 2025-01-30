@@ -7,7 +7,16 @@ async function clickGmailLink(page, userContext, events, test) {
     await step('Verify Gmail Link response', async () =>{
         await homePage.visit();
         await homePage.clickingGmailLink()
-    })    
-}module.exports = {
+    })  
+}
+    async function clickGmailLinkTest(page, userContext, events, test) {
+        const {step} = test;
+        const homePage = new HomePage(page);
+        await step('Verify Gmail Link response', async () =>{
+            await homePage.visit();
+            await homePage.clickingGmailLink()
+        })  
+    }
+module.exports = {
     clickGmailLink
 }
