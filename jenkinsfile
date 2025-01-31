@@ -82,7 +82,7 @@ pipeline {
                                 set SCENARIO=%SCENARIO%
                                 set COUNT=%COUNT%
                                 set TEST_NAME= %SCENARIO%-%TEST_NAME%-%TEST_ENV%-build-%BUILD_NUMBER%
-                                artillery run --config artillery-config.yml scenarios/%SCENARIO%.yml  --environment %TEST_ENV%  --region us-east-1  --count %COUNT% --record --name %TEST_NAME% --key %ARTILLERY_CLOUD_KEY% --dotenv .env
+                                artillery run --config artillery-config.yml scenarios/%SCENARIO%.yml --environment %TEST_ENV% --record --key %ARTILLERY_CLOUD_KEY%
                             '''
                     }
                 }
