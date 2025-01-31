@@ -1,111 +1,74 @@
 pipeline {
     agent any
-     options {
-            // Timeout counter starts AFTER agent is allocated
-            timeout(time: 1, unit: 'SECONDS')
-        }
-    parameters {
-        choice(name: 'TEST_ENV', choices: ['stage', 'qa4', 'prod'], description: 'Test environment')
-        choice(name: 'SCENARIO', choices: ['Google', 'Yahoo'], description: 'Scenario to run')
-        string(name: 'DURATION', defaultValue: '3', description: 'Duration of the test in seconds')
-        string(name: 'ARRIVAL_RATE', defaultValue: '1', description: 'Arrival rate for the test')
-        string(name: 'RAMP_TO', defaultValue: '1', description: 'Ramp to value for the test')
-        string(name: 'COUNT', defaultValue: '1', description: 'Count parameter')
-        string(name: 'BRANCH_NAME', defaultValue: 'origin/sujit', description: 'Git branch to checkout')
-        string(
-            name: 'TEST_NAME',
-            defaultValue: 'Artillery Load Test',
-            description: 'Name for the test to display on the Artillery Dashboard (optional)'
-        )
-    }
 
     environment {
-        ARTILLERY_CLOUD_KEY = credentials('ARTILLERY_CLOUD_KEY')
-        //AWS_ACCESS_KEY_ID = credentials('jenkins-aws-secret-key-id')
-        //AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+        // Set the Node.js version to use (if you're using a specific version)
+        NODE_VERSION = '23.x'
     }
 
     stages {
-            stage('Prepare Environment') {
-                steps {
-                    script {
-                        // Set default TEST_NAME value
-                        //params.TEST_NAME = "CR-LOAD-TEST-${params.TEST_NAME}-${env.BUILD_NUMBER}"
-                        def envVars = ['TEST_ENV', 'ARRIVAL_RATE', 'DURATION', 'RAMP_TO', 'SCENARIO']
-                        def envFileContent = envVars.collect { var -> "${var}=${params[var]}" }.join('\n')
-                        // Set BASE_URL and BASE_URL_ASKCR based on TEST_ENV
-                        switch (params.TEST_ENV) {
-                            case 'stage':
-                                envFileContent += '\nBASE_URL=https://www.google.com/'
-                                envFileContent += '\nBASE_URL_Yahoo=https://wwww.yahoo.com/'
-                                break
-                            case 'qa4':
-                                envFileContent += '\nBASE_URL=https://ecq-content-qa-04.crinfra.net'
-                                envFileContent += '\nBASE_URL_ASKCR=https://ecq-content-qa-04.crinfra.net/askcr'
-                                break
-                            case 'prod':
-                                envFileContent += '\nBASE_URL=https://www.consumerreports.org'
-                                envFileContent += '\nBASE_URL_ASKCR=https://www.consumerreports.org/askcr'
-                                break
-                            default:
-                                error "Invalid TEST_ENV value: ${params.TEST_ENV}"
-                        }
-                        writeFile file: '.env', text: envFileContent
-                    }
+        stage('Checkout') {
+            steps {
+                // Checkout the repository containing your Playwright project
+                git 'https://github.com/sujitkumarjana/Test_Playwright_Project.git'
+            }
+        }
+        
+        stage('Install Node.js') {
+            steps {
+                // Install Node.js using a tool like nvm (if needed)
+                script {
+                    sh '''
+                    curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash -
+                    apt-get install -y nodejs
+                    '''
                 }
             }
-            stage('Checkout') {
-                steps {
-                    // Checkout the repository using credentials and branch parameter
-                    git branch: "${params.BRANCH_NAME}", credentialsId: 'f4ca728e-86d0-4f6d-a717-6f2de580a99e', url: 'https://github.com/sujitkumarjana/Test_Playwright_Project.git'
-                }
-            }
-            stage('Install Dependencies') {
-                    steps {
-                        // Install necessary dependencies
-                        script {
-                            if (isUnix()) {
-                                sh 'npm install'
-                                //sh 'npx playwright install'
-                            } else {
-                                bat 'npm install'
-                            }
-                        }
-                    }
-            }          
-            stage('Run Artillery Tests') {
-                steps {
-                    // Run the Artillery tests with environment variables
-                    script {
-                            bat '''
-                                set TEST_ENV=%TEST_ENV%
-                                set SCENARIO=%SCENARIO%
-                                set COUNT=%COUNT%
-                                set TEST_NAME= %SCENARIO%-%TEST_NAME%-%TEST_ENV%-build-%BUILD_NUMBER%
-                                artillery run --config artillery-config.yml scenarios/%SCENARIO%.yml --environment %TEST_ENV% --record --key %ARTILLERY_CLOUD_KEY%
-                            '''
-                    }
-                }
-            }
+        }
 
-        // stage('Archive Results') {
-        //     steps {
-        //         // Archive the test results
-        //         archiveArtifacts artifacts: 'artillery/results/**', allowEmptyArchive: true
-        //     }
-        // }
+        stage('Install Dependencies') {
+            steps {
+                // Install project dependencies using npm
+                script {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                // Install Playwright and browsers
+                script {
+                    sh 'npx playwright install'
+                }
+            }
+        }
+
+        stage('Run Playwright Tests') {
+            steps {
+                // Run the Playwright tests using npm
+                script {
+                    sh 'npm run test'
+                }
+            }
+        }
+
+        stage('Post Build Cleanup') {
+            steps {
+                // Optionally clear any cache or perform cleanup steps
+                script {
+                    sh 'rm -rf node_modules'
+                }
+            }
+        }
     }
 
     post {
-        always {
-            // Clean up workspace
-            cleanWs()
-        }
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Playwright tests ran successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Playwright tests failed. Check the logs for details.'
         }
     }
 }
