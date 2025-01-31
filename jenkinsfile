@@ -5,23 +5,23 @@ pipeline {
 
     parameters {
         choice(name: 'TEST_ENV', choices: ['stage', 'qa4', 'prod'], description: 'Test environment')
-        choice(name: 'SCENARIO', choices: ['askcr', 'homepage'], description: 'Scenario to run')
+        choice(name: 'SCENARIO', choices: ['Google', 'Yahoo'], description: 'Scenario to run')
         string(name: 'DURATION', defaultValue: '3', description: 'Duration of the test in seconds')
         string(name: 'ARRIVAL_RATE', defaultValue: '1', description: 'Arrival rate for the test')
         string(name: 'RAMP_TO', defaultValue: '1', description: 'Ramp to value for the test')
         string(name: 'COUNT', defaultValue: '1', description: 'Count parameter')
-        string(name: 'BRANCH_NAME', defaultValue: 'feature/amit', description: 'Git branch to checkout')
+        string(name: 'BRANCH_NAME', defaultValue: 'origin/sujit', description: 'Git branch to checkout')
         string(
             name: 'TEST_NAME',
-            defaultValue: 'Load_Test',
+            defaultValue: 'Artillery Load Test',
             description: 'Name for the test to display on the Artillery Dashboard (optional)'
         )
     }
 
     environment {
         ARTILLERY_CLOUD_KEY = credentials('jenkins-artillery-cloud-key')
-        AWS_ACCESS_KEY_ID = credentials('jenkins-aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+        //AWS_ACCESS_KEY_ID = credentials('jenkins-aws-secret-key-id')
+        //AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
     }
 
     stages {
@@ -35,8 +35,8 @@ pipeline {
                         // Set BASE_URL and BASE_URL_ASKCR based on TEST_ENV
                         switch (params.TEST_ENV) {
                             case 'stage':
-                                envFileContent += '\nBASE_URL=https://stage2.consumerreports.org'
-                                envFileContent += '\nBASE_URL_ASKCR=https://stage2.consumerreports.org/askcr'
+                                envFileContent += '\nBASE_URL=https://www.google.com/'
+                                envFileContent += '\nBASE_URL_Yahoo=https://wwww.yahoo.com/'
                                 break
                             case 'qa4':
                                 envFileContent += '\nBASE_URL=https://ecq-content-qa-04.crinfra.net'
@@ -56,7 +56,7 @@ pipeline {
             stage('Checkout') {
                 steps {
                     // Checkout the repository using credentials and branch parameter
-                    git branch: "${params.BRANCH_NAME}", credentialsId: 'f4ca728e-86d0-4f6d-a717-6f2de580a99e', url: 'https://stash.consumer.org/scm/crqaaut/artillery_load_test_automation.git'
+                    git branch: "${params.BRANCH_NAME}", credentialsId: 'f4ca728e-86d0-4f6d-a717-6f2de580a99e', url: 'https://github.com/sujitkumarjana/Test_Playwright_Project.git'
                 }
             }
             stage('Install Dependencies') {
@@ -81,7 +81,7 @@ pipeline {
                                 set SCENARIO=%SCENARIO%
                                 set COUNT=%COUNT%
                                 set TEST_NAME= %SCENARIO%-%TEST_NAME%-%TEST_ENV%-build-%BUILD_NUMBER%
-                                artillery run-fargate --config artillery-config.yml scenarios/%SCENARIO%.yml  --environment %TEST_ENV%  --region us-east-1 --subnet-ids subnet-35c3986f --count %COUNT% --record --name %TEST_NAME% --key %ARTILLERY_CLOUD_KEY% --dotenv .env --cpu 16 --memory 32
+                                artillery run --config artillery-config.yml scenarios/%SCENARIO%.yml  --environment %TEST_ENV%  --region us-east-1  --count %COUNT% --record --name %TEST_NAME% --key %ARTILLERY_CLOUD_KEY% --dotenv .env
                             '''
                     }
                 }
