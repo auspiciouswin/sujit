@@ -1,8 +1,9 @@
 pipeline {
-    agent {
-        label 'SLAVE_ECOM'
-    }
-
+    agent any
+     options {
+            // Timeout counter starts AFTER agent is allocated
+            timeout(time: 1, unit: 'SECONDS')
+        }
     parameters {
         choice(name: 'TEST_ENV', choices: ['stage', 'qa4', 'prod'], description: 'Test environment')
         choice(name: 'SCENARIO', choices: ['Google', 'Yahoo'], description: 'Scenario to run')
