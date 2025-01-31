@@ -1,8 +1,4 @@
 pipeline {
-    agent {
-        label 'SLAVE_ECOM'
-    }
-
     parameters {
         choice(name: 'TEST_ENV', choices: ['stage', 'qa4', 'prod'], description: 'Test environment')
         choice(name: 'SCENARIO', choices: ['askcr', 'homepage'], description: 'Scenario to run')
