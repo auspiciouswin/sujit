@@ -23,8 +23,6 @@ config:
   engines:
     playwright:
       trace: true
-      launchOptions:
-        headless: true
 
   plugins:
     ensure: {}

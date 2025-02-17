@@ -4,7 +4,8 @@
             "file:///e%3A/Workplace/Artillery/Test_Playwright_Project/artillery-config.yml",
             "file:///e%3A/Workplace/Artillery/Test_Playwright_Project/scenarios/homepage.yml",
             "git:/e%3A/Workplace/Artillery/Test_Playwright_Project/artillery-config.yml?%7B%22path%22%3A%22e%3A%5C%5CWorkplace%5C%5CArtillery%5C%5CTest_Playwright_Project%5C%5Cartillery-config.yml%22%2C%22ref%22%3A%224d2ef6793a744a4bde01cd691cf549d521fe9683%22%7D",
-            "git:/e%3A/Workplace/Artillery/Test_Playwright_Project/scenarios/homepage.yml?%7B%22path%22%3A%22e%3A%5C%5CWorkplace%5C%5CArtillery%5C%5CTest_Playwright_Project%5C%5Cscenarios%5C%5Chomepage.yml%22%2C%22ref%22%3A%224d2ef6793a744a4bde01cd691cf549d521fe9683%22%7D"
+            "git:/e%3A/Workplace/Artillery/Test_Playwright_Project/scenarios/homepage.yml?%7B%22path%22%3A%22e%3A%5C%5CWorkplace%5C%5CArtillery%5C%5CTest_Playwright_Project%5C%5Cscenarios%5C%5Chomepage.yml%22%2C%22ref%22%3A%224d2ef6793a744a4bde01cd691cf549d521fe9683%22%7D",
+            "git:/e%3A/Workplace/Artillery/Test_Playwright_Project/artillery-config.yml?%7B%22path%22%3A%22e%3A%5C%5CWorkplace%5C%5CArtillery%5C%5CTest_Playwright_Project%5C%5Cartillery-config.yml%22%2C%22ref%22%3A%22~%22%7D"
         ]
     }
 }
