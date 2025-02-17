@@ -13,7 +13,7 @@ pipeline {
             steps {
                 // Install Node.js using a tool like nvm (if needed)
                 script {
-                    sh '''
+                    bat '''
                     curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash -
                     apt-get install -y nodejs
                     '''
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 // Install project dependencies using npm
                 script {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 // Install Playwright and browsers
                 script {
-                    sh 'npx playwright install'
+                    bat 'npx playwright install'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 // Run the Playwright tests using npm
                 script {
-                    sh 'npm run test'
+                    bat 'npm run test'
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 // Optionally clear any cache or perform cleanup steps
                 script {
-                    sh 'rm -rf node_modules'
+                    bat 'rm -rf node_modules'
                 }
             }
         }
