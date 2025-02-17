@@ -48,6 +48,20 @@ pipeline {
             }
         }
 
+        stage('Install Artillery'{
+            steps{
+                //Install Artillery
+                bat 'npm install -g artillery'
+            }
+        })
+
+        stage('Checking Artillery version'){
+            steps{
+                //Checking Artillery Version
+                bat 'artillery --version'
+            }
+        }
+
         stage('Run Playwright Tests') {
             steps {
                 // Run the Playwright tests using npm
