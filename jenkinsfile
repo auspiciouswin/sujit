@@ -48,12 +48,12 @@ pipeline {
             }
         }
 
-        stage('Install Artillery'{
+        stage('Install Artillery'){
             steps{
                 //Install Artillery
                 bat 'npm install -g artillery'
             }
-        })
+        }
 
         stage('Checking Artillery version'){
             steps{
