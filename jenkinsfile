@@ -21,14 +21,14 @@ pipeline {
         //     }
         // }
 
-        stage('Install Node.js') {
-            steps {
-                script {
-                // Download and install Node.js
-                    powershell(script: 'Invoke-WebRequest -Uri https://nodejs.org/dist/v22.14.0/node-v22.14.0-x64.msi -OutFile nodejs.msi; Start-Process msiexec.exe -ArgumentList "/i", "nodejs.msi", "/quiet" -NoNewWindow -Wait', returnStdout: true)
-                }
-            }
-        }
+        // stage('Install Node.js') {
+        //     steps {
+        //         script {
+        //         // Download and install Node.js
+        //             powershell(script: 'Invoke-WebRequest -Uri https://nodejs.org/dist/v22.14.0/node-v22.14.0-x64.msi -OutFile nodejs.msi; Start-Process msiexec.exe -ArgumentList "/i", "nodejs.msi", "/quiet" -NoNewWindow -Wait', returnStdout: true)
+        //         }
+        //     }
+        // }
 
         stage('Install Dependencies') {
             steps {
