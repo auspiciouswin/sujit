@@ -30,14 +30,14 @@ pipeline {
         //     }
         // }
 
-        // stage('Install Dependencies') {
-        //     steps {
-        //         // Install project dependencies using npm
-        //         script {
-        //             bat 'npm install'
-        //         }
-        //     }
-        // }
+        stage('Install Dependencies') {
+            steps {
+                // Install project dependencies using npm
+                script {
+                    bat 'npm install'
+                }
+            }
+        }
 
         // stage('Install Playwright Browsers') {
         //     steps {
