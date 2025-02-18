@@ -39,18 +39,18 @@ pipeline {
             }
         }
 
-        stage('Install Playwright Browsers') {
-            steps {
-                // Install Playwright and browsers
-                script {
-                    bat 'npx playwright install'
-                }
-            }
-        }
+        // stage('Install Playwright Browsers') {
+        //     steps {
+        //         // Install Playwright and browsers
+        //         script {
+        //             bat 'npx playwright install'
+        //         }
+        //     }
+        // }
 
         stage('Install Artillery'){
             steps{
-                //Install Artillery
+                //Install Artillery globally
                 bat 'npm install -g artillery'
             }
         }
