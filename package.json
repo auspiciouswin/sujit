@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env TEST_ENV=\"stage\" artillery run artillery-config.yml scenarios/homepage.yml --environment stage --record --key a9_mGnKcwfB5ilUR8SskPTmm1qPzJKPn5ec",
+    "test": "cross-env TEST_ENV=\"stage\" artillery run artillery-config.yml scenarios/homepage.yml --environment stage --record --key %ARTILERRY_KEY%",
     "test:local": "cross-env TEST_ENV=\"stage\" artillery run artillery-config-local.yml scenarios/askcr.yml --environment stage"
   },
   "keywords": [],

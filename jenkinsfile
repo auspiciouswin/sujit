@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        ARTILERRY_KEY = credentials('ARTILERRY_KEY')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -62,7 +66,7 @@ pipeline {
             }
         }
 
-        stage('Run Playwright Tests') {
+        stage('Run Artillery Tests') {
             steps {
                 // Run the Playwright tests using npm
                 script {
