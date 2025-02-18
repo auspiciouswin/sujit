@@ -71,14 +71,14 @@ pipeline {
             }
         }
 
-        stage('Post Build Cleanup') {
-            steps {
-                // Optionally clear any cache or perform cleanup steps
-                script {
-                    bat 'rm -rf node_modules'
-                }
-            }
-        }
+        // stage('Post Build Cleanup') {
+        //     steps {
+        //         // Optionally clear any cache or perform cleanup steps
+        //         script {
+        //             bat 'rm -rf node_modules'
+        //         }
+        //     }
+        // }
     }
 
     post {
