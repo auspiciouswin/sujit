@@ -73,7 +73,7 @@ pipeline {
                     echo "Build ID is: ${env.BUILD_ID}"
                     echo "Jenkins URL is: ${env.JENKINS_URL}"
                     echo "Build Number is: ${env.BUILD_NUMBER}"
-                    echo "GIT Branch name is: ${env.BRANCH_NAME}"
+                    echo "GIT Branch name is: ${params.BRANCH_NAME}"
                 }
             }
         }
