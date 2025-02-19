@@ -59,10 +59,22 @@ pipeline {
         //     }
         // }
 
-        stage('Checking Artillery version'){
-            steps{
-                //Checking Artillery Version
-                bat 'artillery --version'
+        // stage('Checking Artillery version'){
+        //     steps{
+        //         //Checking Artillery Version
+        //         bat 'artillery --version'
+        //     }
+        // }
+
+        stage('Verifying few things') {
+            steps {
+                // Install project dependencies using npm
+                script {
+                    echo "Build ID is: ${env.BUILD_ID}"
+                    echo "Jenkins URL is: ${env.JENKINS_URL}"
+                    echo "Build Number is: ${env.BUILD_NUMBER}"
+                    echo "GIT Branch name is: ${env.BRANCH_NAME}"
+                }
             }
         }
 
