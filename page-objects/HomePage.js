@@ -12,7 +12,8 @@ class HomePage{
     }
 
     elements = {
-        gmailLink:()=> this.page.locator('a[aria-label="Gmail "]')
+        gmailLink:()=> this.page.locator('a[aria-label="Gmail"]'),
+        imageLink:()=> this.page.locator('a[aria-label="Search for Images"]')
     }
 
     async visit(){
@@ -29,8 +30,16 @@ class HomePage{
         }
     }
 
-    async clickingGmailLink(){
-        await this.PageUtil.click(this.elements.gmailLink(), ('Gmail Link'))
+    async clickGmailLink(){
+        await this.PageUtil.click(this.elements.gmailLink(), 'Gmail Link')
+    }
+
+    async goBack(){
+        await this.page.goBack()
+    }
+
+    async clickImageLink(){
+        await this.PageUtil.click(this.elements.imageLink(), 'Image Link')
     }
 }module.exports = {
     HomePage
