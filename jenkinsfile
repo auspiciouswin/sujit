@@ -1,49 +1,88 @@
 pipeline {
     agent any
 
+    environment {
+        Artillery_Key = credentials('Artillery_Key')
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 // Checkout the repository containing your Playwright project
-                git 'https://github.com/sujitkumarjana/Test_Playwright_Project.git'
+                git branch: "sujit", url: 'https://github.com/sujitkumarjana/Test_Playwright_Project.git'
             }
         }
         
-        stage('Install Node.js') {
-            steps {
-                // Install Node.js using a tool like nvm (if needed)
-                script {
-                    sh '''
-                    curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash -
-                    apt-get install -y nodejs
-                    '''
-                }
-            }
-        }
+        // stage('Install Node.js') {
+        //     steps {
+        //         // Install Node.js using a tool like nvm (if needed)
+        //         script {
+        //             bat '''
+        //             curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | bash -
+        //             apt-get install -y nodejs
+        //             '''
+        //         }
+        //     }
+        // }
+
+        // stage('Install Node.js') {
+        //     steps {
+        //         script {
+        //         // Download and install Node.js
+        //             powershell(script: 'Invoke-WebRequest -Uri https://nodejs.org/dist/v22.14.0/node-v22.14.0-x64.msi -OutFile nodejs.msi; Start-Process msiexec.exe -ArgumentList "/i", "nodejs.msi", "/quiet" -NoNewWindow -Wait', returnStdout: true)
+        //         }
+        //     }
+        // }
 
         stage('Install Dependencies') {
             steps {
                 // Install project dependencies using npm
                 script {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
 
-        stage('Install Playwright Browsers') {
+        // stage('Install Playwright Browsers') {
+        //     steps {
+        //         // Install Playwright and browsers
+        //         script {
+        //             bat 'npx playwright install'
+        //         }
+        //     }
+        // }
+
+        // stage('Install Artillery'){
+        //     steps{
+        //         //Install Artillery globally
+        //         bat 'npm install -g artillery'
+        //     }
+        // }
+
+        // stage('Checking Artillery version'){
+        //     steps{
+        //         //Checking Artillery Version
+        //         bat 'artillery --version'
+        //     }
+        // }
+
+        stage('Verifying few things') {
             steps {
-                // Install Playwright and browsers
+                // Install project dependencies using npm
                 script {
-                    sh 'npx playwright install'
+                    echo "Build ID is: ${env.BUILD_ID}"
+                    echo "Jenkins URL is: ${env.JENKINS_URL}"
+                    echo "Build Number is: ${env.BUILD_NUMBER}"
+                    echo "GIT Branch name is: ${params.BRANCH_NAME}"
                 }
             }
         }
 
-        stage('Run Playwright Tests') {
+        stage('Run Artillery Tests') {
             steps {
                 // Run the Playwright tests using npm
                 script {
-                    sh 'npm run test'
+                    bat 'npm run test'
                 }
             }
         }
@@ -52,7 +91,7 @@ pipeline {
             steps {
                 // Optionally clear any cache or perform cleanup steps
                 script {
-                    sh 'rm -rf node_modules'
+                    bat 'rd /s /q node_modules'
                 }
             }
         }
