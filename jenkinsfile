@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ARTILERRY_KEY = credentials('ARTILERRY_KEY')
+        Artillery_Key = credentials('Artillery_Key')
     }
 
     stages {
