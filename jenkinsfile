@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the repository containing your Playwright project
-                git branch: "sujit", url: 'https://github.com/auspiciouswin/sujit.git'
+                git branch: "main", url: 'https://github.com/auspiciouswin/sujit.git'
             }
         }
         
